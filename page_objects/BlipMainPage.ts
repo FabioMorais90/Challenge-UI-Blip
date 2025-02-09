@@ -7,6 +7,7 @@ export class BlipMainPage {
     readonly mainPageLocator : Locator;
     readonly jobsButtonLocator : Locator;
     readonly menuButtonLocator : Locator;
+    readonly searchFormLocator : Locator;
 
     constructor(page: Page) {
         this.page = page;
@@ -14,6 +15,7 @@ export class BlipMainPage {
         this.menuButtonLocator = this.page.locator('//button[contains(@aria-label,\'navigation\')]');
         ////a[@href="/jobs/"][1] | a[contains(text(), 'Jobs')]
         this.jobsButtonLocator = this.page.locator('//a[contains(text(), "Jobs")]');
+        this.searchFormLocator = this.page.locator('//div[@class="search-form"]')
 
     }
 
@@ -28,8 +30,9 @@ export class BlipMainPage {
         }
         await expect(this.jobsButtonLocator).toBeVisible();
         await this.jobsButtonLocator.click();
-        const searchFormLocator = this.page.locator('//div[@class="search-form"]')
-        await expect(searchFormLocator).toBeVisible();
+        let newPage = await this.jobsButtonLocator.getAttribute("href");
+        await this.page.goto('https://www.blip.pt' + newPage); //work around some problem with the button click
+        await expect(this.searchFormLocator).toBeVisible();
     }
 
 }
