@@ -15,7 +15,7 @@ test.describe('Planet Challenge',() => {
         page = await context.newPage();
     });
 
-    test('Test MainPage', async ({}) => {
+    test('Test ClickContacts', async ({}) => {
 
         //Navigate to the www.wearepalnet.com website.
         mainPage = new PlanetMainPage(page);
@@ -24,6 +24,17 @@ test.describe('Planet Challenge',() => {
         //test the contact buttons
         await mainPage.clickContact();
 
+
+    });
+
+    test('Test HeaderMenu', async ({}) => {
+
+        //Navigate to the www.wearepalnet.com website.
+        mainPage = new PlanetMainPage(page);
+        await mainPage.goto();
+
+        //test header menu
+        await mainPage.checkMenu();
 
     });
 

@@ -8,6 +8,21 @@ export class PlanetMainPage {
     private  page : Page;
     readonly cookiebuttonLocator: Locator;
     readonly mainPageLocator : Locator;
+    readonly headerMenuLocator: Locator;
+    readonly headerProductsButtonLocator : Locator;
+    readonly headerSolutionsButtonLocator : Locator;
+    readonly headerResourcesButtonLocator : Locator;
+    readonly headerCompanyButtonLocator: Locator;
+    readonly headerProductsCollapseMenuLocator : Locator;
+    readonly headerSolutionsCollapseMenuLocator : Locator;
+    readonly headerResourcesCollapseMenuLocator : Locator;
+    readonly headerCompanyCollapseMenuLocator : Locator;    
+    readonly megaMenuLocator: Locator;
+    readonly megaMenuProductsButtonLocator : Locator;
+    readonly megaMenuSolutionsButtonLocator : Locator;
+    readonly megaMenuResourcesButtonLocator : Locator;
+    readonly megaMenuCompanyButtonLocator: Locator;    
+    readonly menuButtonLocator: Locator;
     readonly contactButton1Locator : Locator;
     readonly contactButton2Locator : Locator;
     readonly contactPageLocator : Locator;
@@ -17,12 +32,27 @@ export class PlanetMainPage {
         this.page = page;
         this.cookiebuttonLocator = this.page.locator('//button[@id="onetrust-accept-btn-handler"]')
         this.mainPageLocator = this.page.locator('//h1[contains(text(), "Connecting")]');
+
+        //header locators
+        this.headerMenuLocator = this.page.locator('//div[@class="header-menus"]');
+        this.headerProductsButtonLocator = this.page.locator('//div[@class="header-menus"]//img[@id="products_img"]');
+        this.headerSolutionsButtonLocator = this.page.locator('//div[@class="header-menus"]//img[@id="solutions_img"]');
+        this.headerResourcesButtonLocator = this.page.locator('//div[@class="header-menus"]//img[@id="resources_img"]');
+        this.headerCompanyButtonLocator = this.page.locator('//div[@class="header-menus"]//img[@id="company_img"]');
+        this.headerProductsCollapseMenuLocator = this.page.locator('//div[@class="megamenu-products__desktop"]');
+        this.headerSolutionsCollapseMenuLocator = this.page.locator('//div[@class="megamenu-solutionss__desktop"]');
+        this.headerResourcesCollapseMenuLocator = this.page.locator('//div[@class="megamenu-resources__desktop"]');
+        this.headerCompanyCollapseMenuLocator = this.page.locator('//div[@class="megamenu-company__desktop"]');    
+        
+        //megamenu locators
+        this.menuButtonLocator = this.page.locator('//img[@alt="Hamburger Menu"]');
+        this.megaMenuLocator = this.page.locator('//div[@class="megamenu-mobile-and-tablets"]')
+
+        //page locators
         this.contactButton1Locator = this.page.locator('//div[@id="block-cohesion-theme-content"]//a[contains(text(), "Contact") and @href="/contact"]');
         this.contactButton2Locator = this.page.locator('//div[@id="block-cohesion-theme-content"]//a[contains(text(), "touch") and @href="/contact"]');
+        //other pages locators
         this.contactPageLocator = this.page.locator('//h2[contains(text(), "help you")]');
-
-
-
     }
 
     async goto() {
@@ -37,10 +67,34 @@ export class PlanetMainPage {
     }
 
     async reset() {
-        await this.goto();
+        await this.page.goto(pageLink);
+    }
+
+    async checkMenu() {
+
+        if (await this.headerMenuLocator.isVisible()){
+            await expect(this.headerProductsButtonLocator).toBeVisible();
+            await expect(this.headerSolutionsButtonLocator).toBeVisible();
+            await expect(this.headerResourcesButtonLocator).toBeVisible();
+            await expect(this.headerCompanyButtonLocator).toBeVisible();
+
+            await this.headerProductsButtonLocator.click();
+            await expect(this.headerProductsCollapseMenuLocator).toBeVisible();
+            await this.headerSolutionsButtonLocator.click();
+            await expect(this.headerSolutionsCollapseMenuLocator).toBeVisible();
+            await this.headerResourcesButtonLocator.click();
+            await expect(this.headerResourcesCollapseMenuLocator).toBeVisible();
+            await this.headerCompanyButtonLocator.click();
+            await expect(this.headerCompanyCollapseMenuLocator).toBeVisible();
+        }
+        else {
+            //TODO: put here the megamenu tests
+        }
+
     }
 
     async clickContact() {
+
         //check if they are visible on the page
         await expect(this.contactButton1Locator).toBeVisible();
         await expect(this.contactButton2Locator).toBeVisible();
@@ -51,26 +105,19 @@ export class PlanetMainPage {
         await expect(this.contactPageLocator).toContainText(contactPageTitle);
 
         //go back to main page
-        await this.goto()
+        await this.reset()
 
         //test button2
-        await this.contactButton2Locator.click()
+        await this.contactButton2Locator.scrollIntoViewIfNeeded();
+        await this.contactButton2Locator.click();
         await expect(this.contactPageLocator).toBeVisible();
         await expect(this.contactPageLocator).toContainText(contactPageTitle);
 
     }
 
-    async openJobs() {
-        /*
-        if(await this.menuButtonLocator.isVisible()){
-            await this.menuButtonLocator.click();
-        }
-        await expect(this.jobsButtonLocator).toBeVisible();
-        await this.jobsButtonLocator.click();
-        let newPage = await this.jobsButtonLocator.getAttribute("href");
-        await this.page.goto('https://www.blip.pt' + newPage); //work around some problem with the button click
-        await expect(this.searchFormLocator).toBeVisible();
-        */
+
+    async CheckToogles() {
+
     }
 
 }
