@@ -1,7 +1,7 @@
 import { test, expect, type Page, BrowserContext } from '@playwright/test';
-import { BlipMainPage } from '../page_objects/BlipMainPage';
-import { BlipJobsPage } from '../page_objects/BlipJobsPage';
-import { BlipSavedJobsPage } from '../page_objects/BlipSavedJobsPage';
+import { BlipMainPage } from '../page_objects/Blip/BlipMainPage';
+import { BlipJobsPage } from '../page_objects/Blip/BlipJobsPage';
+import { BlipSavedJobsPage } from '../page_objects/Blip/BlipSavedJobsPage';
 
 test.describe('Final Challenge',() => {
     let context: BrowserContext;

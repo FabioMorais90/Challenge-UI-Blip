@@ -1,5 +1,5 @@
 import { test, expect, type Page, BrowserContext } from '@playwright/test';
-import { PlanetMainPage } from '../page_objects/PlanetMainPage';
+import { PlanetMainPage } from '../page_objects/Planet/PlanetMainPage';
 
 
 test.describe('Planet Challenge',() => {
